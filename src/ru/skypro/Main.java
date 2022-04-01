@@ -21,7 +21,7 @@ public class Main {
 
     // Задание 2
 
-    byte userOS =1;
+    byte userOS =65;
     int userDeviceYear = 2015;
 
     if (userOS == 0 && userDeviceYear < 2015)
@@ -33,46 +33,57 @@ public class Main {
     else if (userOS == 1 && userDeviceYear >= 2015)
         System.out.println("Ustanovite prilogenie dlya Android Standart po ssilke ");
 
-    else
+    else if (userOS == 0 && userDeviceYear >= 2015)
         System.out.println("Ustanovite prilogenie dlya iOS Standart po ssilke ");
 
-    // if (userOS != 0 && userOS != 1) System.out.println("Vasha OS ne opredelena");
-    // Здесь я хотел добавить в код ту ситуацию, когда OS не определяется при userOS !=0 и userOS !=1,но я не знаю (а также не нашел) оператор, который помог бы мне игнорить userDeviceYear.
+    else
+        System.out.println("Chto-to poshlo ne tak :(");
 
 
-    // Задание 3
+    // Задание 3 (По Юлианскому календарю)
 
-    int year = 2012;
+    int year = 2016;
     byte indicatorLeapYear = 4; // Индикатор високосности года
     int findLeapYear = (year % indicatorLeapYear); // Берем % от остатка при делении на 4, если делится на цело - год высокосный, если есть остаток, год - не високосный
     if (findLeapYear == 0)
-        System.out.println("God Visokosniy ");
+        System.out.println("Po Ulianskomu ---> God Visokosniy ");
     else
-        System.out.println("God Ne Visokosniy ");
+        System.out.println("Po Ulianskomu ---> God Ne Visokosniy ");
+
+
+    // Задание 3.1 (По Григорианскому календарю - как в условии)
+
+    int yearX = 2016;
+    int A = yearX % 400;
+    int B = yearX % 4;
+    int C = yearX % 100;
+    if (A == 0 && B == 0 && C != 0)
+        System.out.println("Po Grigorianskomu ---> God Visokosniy");
+    else
+        System.out.println("Po Grigorianskomu ---> God Visokosniy");
+    // Тут я сделла отдельно для Российского календаря - вписался так сказать, в условия.
 
 
     // Задание 4
 
-    int deliveryDistance = 145; // Объявляем дистанцию до клиента
-    byte distanceStep = 40; // Шаг дистанции после 20км от офиса
+    double deliveryDistance = 41; // Объявляем дистанцию до клиента
+    double distanceStep = 40; // Шаг дистанции после 20км от офиса
 
-    int deliveryTime1 = deliveryDistance % distanceStep; // Ищем процентный остаток при делении
+    double distanceX = Math.ceil (deliveryDistance / distanceStep); // Округляем до большего при делении расстоянии до клиента на шаг дистанции
+    var howManyDay1 = distanceX; // Объявляем переменную, когда не нужно добавлять один день
+    var howManyDay2 = distanceX +1; // Объявляем переменную когда нужно добавить один день
+    double X = deliveryDistance % distanceStep; // Тут беру остаток при делии, чтобы ограничить доставку при неправильных цифрах
 
-    int deliveryTime2 = deliveryDistance / distanceStep; // Делим дистанцию на шаг
+    if (deliveryDistance <= 20) // Слушай когда клиент живет ближе 20км
+        System.out.println("Dlya dostavki nugen 1 den");
+    else if (X >= 1 && X <= 20) // Тут если остаток при делении дистанции варьируется от 1 до 20 включительно, то мы НЕ добавляем день к доставке
+        System.out.println("Dlya dostavki nugno " + howManyDay1 + " dney");
+    else // Тут наоборот добавляем, если при взятии остатка от деления мы не входим в нужны диапазон чисел
+        System.out.println("Dlya dostavki nugno " + howManyDay2 + " dney");
 
-
-    int howManyDay1 = deliveryTime2 + 1; // Если дистанция делится нацело,то добавляем 1
-    int howManyDay2 = deliveryTime2 + 2; // Если дистанция не делится нацело, то добавляем 2, так как Java округляет в меньшую сторону, а не в большую как мне в данном случае надо
-    int howManyDay3 = 1;
-
-    if (deliveryTime1 == 0) // Если дистанция делится нацело, то мы выводим тот случай, когда добаляем 1 день
-        System.out.println(howManyDay1 + " dney nugno dlya dostavki karty");
-    else if (deliveryDistance <= 20) // Тут частный случай, когда клиент живет ближе, либо равно 20км до офиса
-        System.out.println("1 den nugno dly dostavki karty");
-    else // Ну либо тот вариант, когда не делиться нацело и Java округляет в меньшую сторону, то добавляем 2
-        System.out.println(howManyDay2 + " dney nugno dlya dostavki karty");
-    // Со стороны, код кажется корявым? Полностью согласен, но в данном случае меня ограничивает незнание большего числа операторов, для оптимизации кода
-    // Но зато, задача решается при любых условиях, заданных клиентом.
+    // Сейчас прога работате без боев. Почему я ограничил 1 <= X <= 20 ?
+    // Все дело в том, что я ручным способом проверил. Допустим берем интервал от 60 до 100 км.
+    // До середины интервала, не работала формула и нам НЕ нужен был этот дополнительный день, после 81 км все встает в норму.
 
 
     // Задание 5
